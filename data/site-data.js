@@ -50,5 +50,58 @@ window.FX_PUBLISHED_DATA = {
         {name:'Mrs. B. Deepa', role:'AP/IT', tag:'Faculty Co-ordinator', img:'assets/team/deepa.jpg'}
       ]}
     }
-  }
+  },
+  juries: [
+    {
+      id: 'j1',
+      name: 'Arun Prakasam t',
+      role: 'FOUNDER & DIRECTOR',
+      company: 'TEQ Research Solutions India Private Limited',
+      location: 'NAMAKKAL',
+      img: 'assets/juries/Arun Prakasam t.png'
+    },
+    {
+      id: 'j2',
+      name: 'MANIKANDAN M',
+      role: 'Apps Dev Intmd Programmer Analyst',
+      company: 'CITI',
+      location: 'CHENNAI',
+      img: 'assets/juries/MANIKANDAN M.png'
+    },
+    {
+      id: 'j3',
+      name: 'BAHEERATHAN K',
+      role: 'TECHNICAL MANAGER',
+      company: 'GATEWAY SOFTWARE SOLUTIONS',
+      location: 'ERODE',
+      img: 'assets/juries/BAHEERATHAN K.png'
+    },
+    {
+      id: 'j4',
+      name: 'PARIVALAVAN M',
+      role: 'ASSOCIATE SOFTWARE ENGINEER',
+      company: 'HEXAWARE TECHNOLOGIES',
+      location: 'CHENNAI',
+      img: 'assets/juries/PARIVALAVAN M.png'
+    },
+    {
+      id: 'j5',
+      name: 'Sanjiv Raaj  R',
+      role: 'CEO and Founder',
+      company: 'Guhanix Technology',
+      location: 'BTM Layout, Bangalore',
+      img: 'assets/juries/Sanjiv Raaj  R.png'
+    }
+  ],
+  mentors: [
+    {
+      id: 'm1',
+      name: 'RAJESH K',
+      role: 'FullStack Developer',
+      organization: 'Intern Vibexio Pvt Ltd, Chennai',
+      badge: 'GDGoC Organizer, PEC',
+      location: 'Chennai',
+      img: 'assets/juries/rajesh.png'
+    }
+  ]
 };

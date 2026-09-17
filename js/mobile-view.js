@@ -228,6 +228,82 @@ p.lede{color:var(--grey); font-size:0.92rem; line-height:1.6; margin:0 0 22px;}
 .m-role-heading{padding:10px 16px 2px; font-family:var(--font-d); font-weight:700; font-size:0.68rem; letter-spacing:0.04em; text-transform:uppercase; color:var(--orange); border-top:1px solid var(--line);}
 .org-body>.m-role-heading:first-child{border-top:none;}
 
+/* ---------- Juries rail ---------- */
+.jury-card-m{
+  scroll-snap-align:start; flex:0 0 250px; background:var(--panel); border:1px solid var(--line); border-radius:18px; overflow:hidden; display:flex; flex-direction:column;
+}
+.jury-m-head{
+  height:200px; position:relative; background:radial-gradient(circle at 50% 85%, rgba(255,90,0,0.22) 0%, rgba(20,20,26,0.92) 75%); display:flex; align-items:flex-end; justify-content:center; overflow:hidden; border-bottom:1px solid var(--line);
+}
+.jury-m-head img{
+  width:auto; max-width:92%; height:94%; object-fit:contain; object-position:bottom center; filter:drop-shadow(0 10px 18px rgba(0,0,0,0.7));
+}
+.jury-m-badge{
+  position:absolute; top:10px; left:10px; font-family:var(--font-d); font-size:0.62rem; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; color:var(--orange); background:rgba(10,10,12,0.85); border:1px solid rgba(255,90,0,0.4); padding:3px 8px; border-radius:100px;
+}
+.jury-m-body{
+  padding:14px 16px 16px; display:flex; flex-direction:column; gap:4px; flex:1;
+}
+.jury-m-name{
+  font-family:var(--font-d); font-weight:800; font-size:0.95rem; color:#fff; margin:0 0 2px;
+}
+.jury-m-role{
+  font-size:0.72rem; font-weight:700; color:var(--orange); text-transform:uppercase; letter-spacing:0.5px;
+}
+.jury-m-company{
+  font-size:0.78rem; color:var(--grey); line-height:1.4; margin:4px 0 8px;
+}
+.jury-m-foot{
+  margin-top:auto; padding-top:8px; border-top:1px solid var(--line); display:flex; align-items:center; justify-content:space-between;
+}
+.jury-m-loc{
+  display:inline-flex; align-items:center; gap:5px; font-size:0.7rem; color:var(--grey-dim);
+}
+.jury-m-loc i{
+  color:var(--orange); font-size:0.68rem;
+}
+.jury-m-pill{
+  font-size:0.65rem; color:#3DDC97; background:rgba(61,220,151,0.1); border:1px solid rgba(61,220,151,0.3); padding:2px 6px; border-radius:4px; font-weight:600;
+}
+
+/* ---------- Mentors rail ---------- */
+.mentor-card-m{
+  scroll-snap-align:start; flex:0 0 250px; background:var(--panel); border:1px solid rgba(61,220,151,0.25); border-radius:18px; overflow:hidden; display:flex; flex-direction:column;
+}
+.mentor-m-head{
+  height:200px; position:relative; background:radial-gradient(circle at 50% 85%, rgba(61,220,151,0.22) 0%, rgba(14,20,18,0.92) 75%); display:flex; align-items:flex-end; justify-content:center; overflow:hidden; border-bottom:1px solid var(--line);
+}
+.mentor-m-head img{
+  width:auto; max-width:92%; height:94%; object-fit:contain; object-position:bottom center; filter:drop-shadow(0 10px 18px rgba(0,0,0,0.7));
+}
+.mentor-m-badge{
+  position:absolute; top:10px; left:10px; font-family:var(--font-d); font-size:0.62rem; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; color:#3DDC97; background:rgba(10,14,12,0.85); border:1px solid rgba(61,220,151,0.4); padding:3px 8px; border-radius:100px;
+}
+.mentor-m-body{
+  padding:14px 16px 16px; display:flex; flex-direction:column; gap:4px; flex:1;
+}
+.mentor-m-name{
+  font-family:var(--font-d); font-weight:800; font-size:0.95rem; color:#fff; margin:0 0 2px;
+}
+.mentor-m-role{
+  font-size:0.72rem; font-weight:700; color:#3DDC97; text-transform:uppercase; letter-spacing:0.5px;
+}
+.mentor-m-company{
+  font-size:0.78rem; color:var(--grey); line-height:1.4; margin:4px 0 8px;
+}
+.mentor-m-foot{
+  margin-top:auto; padding-top:8px; border-top:1px solid var(--line); display:flex; align-items:center; justify-content:space-between;
+}
+.mentor-m-loc{
+  display:inline-flex; align-items:center; gap:5px; font-size:0.7rem; color:var(--grey-dim);
+}
+.mentor-m-loc i{
+  color:#3DDC97; font-size:0.68rem;
+}
+.mentor-m-pill{
+  font-size:0.65rem; color:#3DDC97; background:rgba(61,220,151,0.1); border:1px solid rgba(61,220,151,0.3); padding:2px 6px; border-radius:4px; font-weight:600;
+}
+
 /* ---------- Partners rail ---------- */
 .partner-card{
   scroll-snap-align:start; flex:0 0 260px; background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:18px; display:flex; flex-direction:column; gap:10px;
@@ -306,6 +382,8 @@ footer{margin-top:38px; padding:30px 18px 26px; border-top:1px solid var(--line)
     <a href="#timeline" class="nav-link">Timeline <i class="fa-solid fa-arrow-right"></i></a>
     <a href="#tracks" class="nav-link">Tracks <i class="fa-solid fa-arrow-right"></i></a>
     <a href="#prizes" class="nav-link">Prizes <i class="fa-solid fa-arrow-right"></i></a>
+    <a href="#juries" class="nav-link">Jury Panel <i class="fa-solid fa-arrow-right"></i></a>
+    <a href="#mentors" class="nav-link">Mentors <i class="fa-solid fa-arrow-right"></i></a>
     <a href="#organizers" class="nav-link">Organizers <i class="fa-solid fa-arrow-right"></i></a>
     <a href="#partners" class="nav-link">Partners <i class="fa-solid fa-arrow-right"></i></a>
     <a href="#site-footer" class="nav-link">Contact <i class="fa-solid fa-arrow-right"></i></a>
@@ -509,6 +587,27 @@ footer{margin-top:38px; padding:30px 18px 26px; border-top:1px solid var(--line)
   </div>
 </section>
 
+<!-- JURIES PANEL -->
+<section id="juries">
+  <div class="section-head">
+    <div class="eyebrow"><span class="dot"></span> Industry Judges</div>
+    <h2 class="head">The Jury <span class="accent">Panel</span></h2>
+    <p class="lede">Distinguished technology leaders and founders evaluating your projects.</p>
+  </div>
+  <div class="rail-hint"><i class="fa-solid fa-arrow-right"></i> swipe to view all 5 jury members</div>
+  <div class="rail" id="m-juries-rail"></div>
+</section>
+
+<!-- MENTORS SECTION -->
+<section id="mentors">
+  <div class="section-head">
+    <div class="eyebrow" style="color:#3DDC97;"><span class="dot" style="background:#3DDC97;box-shadow:0 0 8px #3DDC97;"></span> Technical Guidance</div>
+    <h2 class="head">Hackathon <span class="accent" style="color:#3DDC97;">Mentors</span></h2>
+    <p class="lede">Experienced developers guiding your teams through technical hurdles.</p>
+  </div>
+  <div class="rail" id="m-mentors-rail"></div>
+</section>
+
 <!-- ORGANIZERS (data-driven: rendered from the same shared team data,
      window.FX_getTeamData() in js/team-data.js, that the desktop
      #people section and admin-portal.html's Team Deck use, so edits
@@ -617,6 +716,62 @@ footer{margin-top:38px; padding:30px 18px 26px; border-top:1px solid var(--line)
 
   function esc(s) { var d = document.createElement('div'); d.textContent = (s == null ? '' : s); return d.innerHTML; }
 
+  var FALLBACK_JURIES = [
+    { id: 'j1', name: 'Arun Prakasam t', role: 'FOUNDER & DIRECTOR', company: 'TEQ Research Solutions India Private Limited', location: 'NAMAKKAL', img: 'assets/juries/Arun Prakasam t.png' },
+    { id: 'j2', name: 'MANIKANDAN M', role: 'Apps Dev Intmd Programmer Analyst', company: 'CITI', location: 'CHENNAI', img: 'assets/juries/MANIKANDAN M.png' },
+    { id: 'j3', name: 'BAHEERATHAN K', role: 'TECHNICAL MANAGER', company: 'GATEWAY SOFTWARE SOLUTIONS', location: 'ERODE', img: 'assets/juries/BAHEERATHAN K.png' },
+    { id: 'j4', name: 'PARIVALAVAN M', role: 'ASSOCIATE SOFTWARE ENGINEER', company: 'HEXAWARE TECHNOLOGIES', location: 'CHENNAI', img: 'assets/juries/PARIVALAVAN M.png' },
+    { id: 'j5', name: 'Sanjiv Raaj  R', role: 'CEO and Founder', company: 'Guhanix Technology', location: 'BTM Layout, Bangalore', img: 'assets/juries/Sanjiv Raaj  R.png' }
+  ];
+
+  function juryTemplate(j) {
+    return '<div class="jury-card-m">'
+      + '<div class="jury-m-head">'
+      + '<span class="jury-m-badge">Jury Member</span>'
+      + '<img src="' + esc(j.img || '') + '" alt="' + esc(j.name || '') + '" loading="lazy">'
+      + '</div>'
+      + '<div class="jury-m-body">'
+      + '<h4 class="jury-m-name">' + esc(j.name || '') + '</h4>'
+      + '<div class="jury-m-role">' + esc(j.role || '') + '</div>'
+      + '<div class="jury-m-company">' + esc(j.company || '') + '</div>'
+      + '<div class="jury-m-foot">'
+      + '<div class="jury-m-loc"><i class="fa-solid fa-location-dot"></i> ' + esc(j.location || '') + '</div>'
+      + '<span class="jury-m-pill">Judge</span>'
+      + '</div>'
+      + '</div>'
+      + '</div>';
+  }
+
+  var FALLBACK_MENTORS = [
+    {
+      id: 'm1',
+      name: 'RAJESH K',
+      role: 'FullStack Developer',
+      organization: 'Intern Vibexio Pvt Ltd, Chennai',
+      badge: 'GDGoC Organizer, PEC',
+      location: 'Chennai',
+      img: 'assets/juries/rajesh.png'
+    }
+  ];
+
+  function mentorTemplate(m) {
+    return '<div class="mentor-card-m">'
+      + '<div class="mentor-m-head">'
+      + '<span class="mentor-m-badge">Mentor</span>'
+      + '<img src="' + esc(m.img || 'assets/juries/rajesh.png') + '" alt="' + esc(m.name || '') + '" loading="lazy">'
+      + '</div>'
+      + '<div class="mentor-m-body">'
+      + '<h4 class="mentor-m-name">' + esc(m.name || '') + '</h4>'
+      + '<div class="mentor-m-role">' + esc(m.role || '') + '</div>'
+      + '<div class="mentor-m-company">' + esc(m.organization || m.company || '') + '</div>'
+      + '<div class="mentor-m-foot">'
+      + '<div class="mentor-m-loc"><i class="fa-solid fa-location-dot"></i> ' + esc(m.location || 'Chennai') + '</div>'
+      + '<span class="mentor-m-pill">Tech Mentor</span>'
+      + '</div>'
+      + '</div>'
+      + '</div>';
+  }
+
   function cardTemplate(p) {
     return '<div class="partner-card">'
       + '<div class="partner-logo-frame"><img src="' + esc(p.logo || '') + '" alt="' + esc(p.name || '') + ' logo"></div>'
@@ -640,6 +795,26 @@ footer{margin-top:38px; padding:30px 18px 26px; border-top:1px solid var(--line)
     var FA_HREF = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css';
     root.innerHTML = '<link rel="stylesheet" href="' + FA_HREF + '">'
       + '<style>' + MOBILE_CSS + '</style>' + MOBILE_HTML;
+
+    // ---- Juries (data-driven, shared from site-data.js) ----
+    function renderJuries() {
+      var rail = root.getElementById('m-juries-rail');
+      if (!rail) return;
+      var list = (window.FX_PUBLISHED_DATA && window.FX_PUBLISHED_DATA.juries) || FALLBACK_JURIES;
+      rail.innerHTML = list.map(juryTemplate).join('');
+    }
+    renderJuries();
+    window.addEventListener('fx:live-update', renderJuries);
+
+    // ---- Mentors (data-driven, shared from site-data.js) ----
+    function renderMentors() {
+      var rail = root.getElementById('m-mentors-rail');
+      if (!rail) return;
+      var list = (window.FX_PUBLISHED_DATA && window.FX_PUBLISHED_DATA.mentors) || FALLBACK_MENTORS;
+      rail.innerHTML = list.map(mentorTemplate).join('');
+    }
+    renderMentors();
+    window.addEventListener('fx:live-update', renderMentors);
 
     // ---- Partners (data-driven, shared with admin portal) ----
     function renderPartners() {
