@@ -416,13 +416,36 @@ var latestSlots = null;
    admin page is opened locally or on the hosted site.
    ============================================================== */
 var REG_LINK_KEY = 'fusionx_registration_link';
-var registrationLink = (function(){ try{ return localStorage.getItem(REG_LINK_KEY) || ''; }catch(e){ return ''; } })();
+var DEFAULT_REG_LINK = 'https://forms.gle/c6d2iHY61EvM3fXK9';
+var registrationLink = (function(){
+  try{ return localStorage.getItem(REG_LINK_KEY) || (window.FX_PUBLISHED_DATA && window.FX_PUBLISHED_DATA.registrationLink) || DEFAULT_REG_LINK; }
+  catch(e){ return DEFAULT_REG_LINK; }
+})();
+
+function getEffectiveRegLink(){
+  var input = document.getElementById('regLinkInput');
+  if (input && input.value.trim()) {
+    return input.value.trim();
+  }
+  if (registrationLink && registrationLink.trim()) {
+    return registrationLink.trim();
+  }
+  if (window.FX_PUBLISHED_DATA && typeof window.FX_PUBLISHED_DATA.registrationLink === 'string' && window.FX_PUBLISHED_DATA.registrationLink.trim()) {
+    return window.FX_PUBLISHED_DATA.registrationLink.trim();
+  }
+  try {
+    var stored = localStorage.getItem(REG_LINK_KEY);
+    if (stored && stored.trim()) return stored.trim();
+  } catch(e){}
+  return DEFAULT_REG_LINK;
+}
 
 function publishLive(){
+  registrationLink = getEffectiveRegLink();
+  if (window.FX_PUBLISHED_DATA) {
+    window.FX_PUBLISHED_DATA.registrationLink = registrationLink;
+  }
   if(!window.FX_DOC){
-    // Firebase not connected (offline, blocked, or not yet configured) —
-    // edits still work locally via localStorage, just not automatically
-    // synced everywhere until connection is available.
     return;
   }
   window.FX_DOC.set({
@@ -435,13 +458,20 @@ function publishLive(){
 }
 
 function saveRegLink(){
-  var v = document.getElementById('regLinkInput').value.trim();
-  registrationLink = v;
-  try{ localStorage.setItem(REG_LINK_KEY, v); }catch(e){}
+  var input = document.getElementById('regLinkInput');
+  var v = input ? input.value.trim() : '';
+  registrationLink = v || DEFAULT_REG_LINK;
+  try{ localStorage.setItem(REG_LINK_KEY, registrationLink); }catch(e){}
+  if (window.FX_PUBLISHED_DATA) {
+    window.FX_PUBLISHED_DATA.registrationLink = registrationLink;
+  }
+  if (input) input.value = registrationLink;
   publishLive();
   var st = document.getElementById('regLinkStatus');
-  st.style.color = 'var(--green)';
-  st.textContent = v ? 'Saved \u2713 every Register button on the site now points here.' : 'Cleared \u2014 Register buttons reverted to the placeholder.';
+  if (st) {
+    st.style.color = 'var(--green)';
+    st.textContent = 'Saved \u2713 every Register button on the site now points here.';
+  }
 }
 
 // Hydrate the registration link field once the page (and, if connected,
@@ -449,9 +479,8 @@ function saveRegLink(){
 function hydrateRegLink(){
   var input = document.getElementById('regLinkInput');
   if(!input) return;
-  var live = window.FX_PUBLISHED_DATA && window.FX_PUBLISHED_DATA.registrationLink;
-  if(live){ registrationLink = live; }
-  input.value = registrationLink || '';
+  registrationLink = getEffectiveRegLink();
+  input.value = registrationLink;
 }
 window.addEventListener('fx:live-update', hydrateRegLink);
 document.addEventListener('DOMContentLoaded', hydrateRegLink);
@@ -566,6 +595,7 @@ function hydrateAdmin(){
 }
 
 function publishAll(){
+  saveRegLink();
   localState.heroImage=document.getElementById('heroImageInput').value;
   localState.video=document.getElementById('videoInput').value;
   localState.status=document.getElementById('statusInput').value;
@@ -665,6 +695,7 @@ var toastDeckTimer = null;
    ============================================================== */
 function downloadPublishedData(){
   var payload = {
+    registrationLink: getEffectiveRegLink(),
     partners: partners,
     team: teamData
   };

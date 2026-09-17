@@ -220,7 +220,7 @@ function requireState(fallback){
     return urlState;
   }
 
-  window.location.href = fallback || 'register.html';
+  window.location.href = fallback || 'index.html';
   return null;
 }
 

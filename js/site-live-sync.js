@@ -19,11 +19,29 @@
 (function () {
   window.FX_PUBLISHED_DATA = window.FX_PUBLISHED_DATA || {};
 
+  function getBestRegLink(data) {
+    if (data && typeof data.registrationLink === 'string' && data.registrationLink.trim()) {
+      return data.registrationLink.trim();
+    }
+    if (window.FX_PUBLISHED_DATA && typeof window.FX_PUBLISHED_DATA.registrationLink === 'string' && window.FX_PUBLISHED_DATA.registrationLink.trim()) {
+      return window.FX_PUBLISHED_DATA.registrationLink.trim();
+    }
+    try {
+      var stored = localStorage.getItem('fusionx_registration_link');
+      if (stored && stored.trim()) return stored.trim();
+    } catch (e) {}
+    return 'https://forms.gle/c6d2iHY61EvM3fXK9';
+  }
+
+  if (!window.FX_PUBLISHED_DATA.registrationLink) {
+    window.FX_PUBLISHED_DATA.registrationLink = getBestRegLink(null);
+  }
+
   function applyLiveData(data) {
     if (!data) return;
     if (data.partners) window.FX_PUBLISHED_DATA.partners = data.partners;
     if (data.team) window.FX_PUBLISHED_DATA.team = data.team;
-    window.FX_PUBLISHED_DATA.registrationLink = data.registrationLink || '';
+    window.FX_PUBLISHED_DATA.registrationLink = getBestRegLink(data);
     window.FX_LIVE_CONNECTED = true;
     window.dispatchEvent(new CustomEvent('fx:live-update', { detail: data }));
     applyRegisterLinks(document);
@@ -37,35 +55,23 @@
   // root can be `document` or a shadow root (mobile view).
   window.FX_applyRegisterLinks = function (root) {
     if (!root) return;
-    var link = window.FX_PUBLISHED_DATA && window.FX_PUBLISHED_DATA.registrationLink;
-    var nodes = root.querySelectorAll('a[href="register.html"], a[data-register-link]');
+    var link = (window.FX_PUBLISHED_DATA && window.FX_PUBLISHED_DATA.registrationLink) || getBestRegLink(null);
+    var nodes = root.querySelectorAll('a[data-register-link], a[href*="forms.gle"], a[href*="hack2skill"], a[href="register.html"]');
     nodes.forEach(function (el) {
       if (link) {
         el.setAttribute('href', link);
         el.setAttribute('target', '_blank');
         el.setAttribute('rel', 'noopener');
-      } else {
-        el.setAttribute('data-register-link', '');
       }
     });
   };
   function applyRegisterLinks(root) { window.FX_applyRegisterLinks(root); }
 
-  /* ==============================================================
-     REGISTER BUTTON CLICKS — every "Register" / "Join" button on the
-     site (desktop AND the mobile view inside its Shadow DOM) goes
-     through here. Decided fresh at the moment of the click, straight
-     from window.FX_PUBLISHED_DATA, so it's always correct even if the
-     link was just published seconds ago:
-       - No registration link published yet -> show a "coming soon"
-         toast, don't navigate anywhere.
-       - Link published -> open it in a new tab immediately.
-     e.composedPath() is used (not e.target) specifically so this also
-     catches clicks on buttons rendered inside the mobile Shadow DOM.
-     ============================================================== */
   function isRegisterLink(node) {
-    return node && node.tagName === 'A' &&
-      (node.getAttribute('href') === 'register.html' || node.hasAttribute('data-register-link'));
+    if (!node || node.tagName !== 'A') return false;
+    if (node.hasAttribute('data-register-link')) return true;
+    var href = node.getAttribute('href') || '';
+    return href === 'register.html' || href.indexOf('forms.gle') !== -1 || href.indexOf('hack2skill') !== -1;
   }
 
   document.addEventListener('click', function (e) {
@@ -74,7 +80,7 @@
     for (var i = 0; i < path.length; i++) { if (isRegisterLink(path[i])) { el = path[i]; break; } }
     if (!el) return;
     e.preventDefault();
-    var link = window.FX_PUBLISHED_DATA && window.FX_PUBLISHED_DATA.registrationLink;
+    var link = (window.FX_PUBLISHED_DATA && window.FX_PUBLISHED_DATA.registrationLink) || getBestRegLink(null);
     if (link) {
       window.open(link, '_blank', 'noopener');
     } else {

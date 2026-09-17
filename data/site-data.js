@@ -32,6 +32,7 @@
    they're published here.
    ================================================================== */
 window.FX_PUBLISHED_DATA = {
+  registrationLink: 'https://forms.gle/c6d2iHY61EvM3fXK9',
   partners: [
     {id:'p1', logo:'assets/gdg-logo.png', type:'Community Partner', eyebrow:'Together We Build', headingWhite:'Community', headingAccent:'Partners', desc:'We collaborate with forward-thinking organizations and communities to empower builders, innovators, and future leaders.', name:'Google Developer Groups', role:'Community Partner', partnerDesc:'Empowering student developers through learning, sharing, and building cutting-edge applications together.', linkText:'', linkUrl:''},
     {id:'p2', logo:'assets/gcc-logo.png', type:'Organizing Partner', eyebrow:'Powering The Build', headingWhite:'Organizing', headingAccent:'Partners', desc:'Fostering programmatic excellence, peer learning, and hands-on developer experiences across the ecosystem.', name:'Growing Coders Club', role:'Organizing Partner', partnerDesc:'Building a community of passionate developers through workshops, hackathons, and collaborative projects.', linkText:'', linkUrl:''},

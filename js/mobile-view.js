@@ -309,7 +309,7 @@ footer{margin-top:38px; padding:30px 18px 26px; border-top:1px solid var(--line)
     <a href="#organizers" class="nav-link">Organizers <i class="fa-solid fa-arrow-right"></i></a>
     <a href="#partners" class="nav-link">Partners <i class="fa-solid fa-arrow-right"></i></a>
     <a href="#site-footer" class="nav-link">Contact <i class="fa-solid fa-arrow-right"></i></a>
-    <a href="register.html" class="nav-cta">Register Now</a>
+    <a href="https://forms.gle/c6d2iHY61EvM3fXK9" target="_blank" rel="noopener" data-register-link class="nav-cta">Register Now</a>
   </div>
 </div>
 
@@ -321,7 +321,7 @@ footer{margin-top:38px; padding:30px 18px 26px; border-top:1px solid var(--line)
     <h1 class="hero-title">BUILD. INNOVATE.<br><span class="grad">DISRUPT.</span></h1>
     <p class="hero-desc">FusionX 1.0 is a 24-hour hackathon celebrating the spirit of Programmers' Day — where ideas turn into innovation and developers build solutions for real-world challenges.</p>
     <div class="hero-ctas">
-      <a href="register.html" class="btn btn-primary">Register Now <i class="fa-solid fa-arrow-right"></i></a>
+      <a href="https://forms.gle/c6d2iHY61EvM3fXK9" target="_blank" rel="noopener" data-register-link class="btn btn-primary">Register Now <i class="fa-solid fa-arrow-right"></i></a>
       <a href="#tracks" class="btn btn-secondary">Explore Tracks <i class="fa-solid fa-arrow-right"></i></a>
     </div>
   </div>
@@ -443,31 +443,31 @@ footer{margin-top:38px; padding:30px 18px 26px; border-top:1px solid var(--line)
     <div class="track-top"><div class="track-ic"><i class="fa-solid fa-graduation-cap"></i></div><span class="track-tag">TRACK 01</span></div>
     <h4>Smart Campus &amp; Education</h4>
     <p>Next-gen digital tools, automated campus workflows, and interactive learning platforms.</p>
-    <a href="register.html" class="track-link">Register Track <i class="fa-solid fa-arrow-right"></i></a>
+    <a href="https://forms.gle/c6d2iHY61EvM3fXK9" target="_blank" rel="noopener" data-register-link class="track-link">Register Track <i class="fa-solid fa-arrow-right"></i></a>
   </div>
   <div class="track-card">
     <div class="track-top"><div class="track-ic"><i class="fa-solid fa-robot"></i></div><span class="track-tag">TRACK 02</span></div>
     <h4>AI for Social Good</h4>
     <p>Applied ML, computer vision, and generative AI built for real communities and human impact.</p>
-    <a href="register.html" class="track-link">Register Track <i class="fa-solid fa-arrow-right"></i></a>
+    <a href="https://forms.gle/c6d2iHY61EvM3fXK9" target="_blank" rel="noopener" data-register-link class="track-link">Register Track <i class="fa-solid fa-arrow-right"></i></a>
   </div>
   <div class="track-card">
     <div class="track-top"><div class="track-ic"><i class="fa-solid fa-seedling"></i></div><span class="track-tag">TRACK 03</span></div>
     <h4>Sustainability &amp; Environment</h4>
     <p>Clean-tech, renewable energy optimization, and climate-facing software platforms.</p>
-    <a href="register.html" class="track-link">Register Track <i class="fa-solid fa-arrow-right"></i></a>
+    <a href="https://forms.gle/c6d2iHY61EvM3fXK9" target="_blank" rel="noopener" data-register-link class="track-link">Register Track <i class="fa-solid fa-arrow-right"></i></a>
   </div>
   <div class="track-card">
     <div class="track-top"><div class="track-ic"><i class="fa-solid fa-heart-pulse"></i></div><span class="track-tag">TRACK 04</span></div>
     <h4>Healthcare &amp; Medical Tech</h4>
     <p>Telemedicine, AI diagnostics, emergency response, and patient care innovations.</p>
-    <a href="register.html" class="track-link">Register Track <i class="fa-solid fa-arrow-right"></i></a>
+    <a href="https://forms.gle/c6d2iHY61EvM3fXK9" target="_blank" rel="noopener" data-register-link class="track-link">Register Track <i class="fa-solid fa-arrow-right"></i></a>
   </div>
   <div class="track-card featured">
     <div class="track-top"><div class="track-ic"><i class="fa-solid fa-rocket"></i></div><span class="track-tag hi">TRACK 05 · WILD CARD</span></div>
     <h4>Open Innovation &amp; Emerging Tech</h4>
     <p>No boundaries! Web3, AR/VR, Robotics, IoT, or any breakthrough moonshot idea.</p>
-    <a href="register.html" class="track-link">Register Track <i class="fa-solid fa-arrow-right"></i></a>
+    <a href="https://forms.gle/c6d2iHY61EvM3fXK9" target="_blank" rel="noopener" data-register-link class="track-link">Register Track <i class="fa-solid fa-arrow-right"></i></a>
   </div>
 </section>
 
@@ -485,7 +485,7 @@ footer{margin-top:38px; padding:30px 18px 26px; border-top:1px solid var(--line)
     <div class="f-step" style="padding-bottom:6px;"><div class="tag">STEP 04</div><h4>Team Lead completes the payment</h4><p>The Team Lead makes a single payment for the entire team and completes the registration.</p></div>
   </div>
   <div class="container" style="margin-top:8px;">
-    <a href="register.html" class="btn btn-primary">Start Your Team <i class="fa-solid fa-arrow-right"></i></a>
+    <a href="https://forms.gle/c6d2iHY61EvM3fXK9" target="_blank" rel="noopener" data-register-link class="btn btn-primary">Start Your Team <i class="fa-solid fa-arrow-right"></i></a>
   </div>
 </section>
 
@@ -539,7 +539,7 @@ footer{margin-top:38px; padding:30px 18px 26px; border-top:1px solid var(--line)
   <div class="eyebrow"><span class="dot"></span> Slots Are Limited</div>
   <h3>Ready to build the next big thing?</h3>
   <p>Lock in your track, gather your squad, and be part of FusionX 1.0.</p>
-  <a href="register.html" class="btn btn-primary">Register Now <i class="fa-solid fa-arrow-right"></i></a>
+  <a href="https://forms.gle/c6d2iHY61EvM3fXK9" target="_blank" rel="noopener" data-register-link class="btn btn-primary">Register Now <i class="fa-solid fa-arrow-right"></i></a>
 </div>
 
 <!-- FOOTER -->
@@ -588,7 +588,7 @@ footer{margin-top:38px; padding:30px 18px 26px; border-top:1px solid var(--line)
   <a href="#timeline" class="tab" data-tab="timeline"><i class="fa-solid fa-clock"></i>Timeline</a>
   <a href="#tracks" class="tab" data-tab="tracks"><i class="fa-solid fa-layer-group"></i>Tracks</a>
   <a href="#prizes" class="tab" data-tab="prizes"><i class="fa-solid fa-trophy"></i>Prizes</a>
-  <a href="register.html" class="tab cta"><span class="tab-pill"><i class="fa-solid fa-arrow-right"></i></span>Join</a>
+  <a href="https://forms.gle/c6d2iHY61EvM3fXK9" target="_blank" rel="noopener" data-register-link class="tab cta"><span class="tab-pill"><i class="fa-solid fa-arrow-right"></i></span>Join</a>
 </nav>
 `;
 
