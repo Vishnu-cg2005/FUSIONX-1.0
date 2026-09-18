@@ -32,22 +32,48 @@
     return Object.assign({}, DEFAULT_STATE);
   }
 
+  function applyIncomingTimerState(incoming) {
+    if (!incoming || typeof incoming !== 'object') return;
+    currentState = Object.assign({}, DEFAULT_STATE, incoming);
+    try {
+      localStorage.setItem(TIMER_KEY, JSON.stringify(currentState));
+    } catch (err) {}
+    window.dispatchEvent(new CustomEvent('fx:timer-change', { detail: currentState }));
+  }
+
   function saveState(state) {
     state.lastUpdated = Date.now();
     try {
       localStorage.setItem(TIMER_KEY, JSON.stringify(state));
     } catch (e) {
-      console.warn('[FusionX Timer] Failed to save timer state:', e);
+      console.warn('[FusionX Timer] Failed to save timer state locally:', e);
     }
-    // Also push to Firestore if connected
+    // Also push to Firestore cloud for cross-device real-time sync
     if (window.FX_DOC) {
-      window.FX_DOC.set({ timerState: state }, { merge: true }).catch(function () {});
+      window.FX_DOC.set({ timerState: state }, { merge: true }).then(function () {
+        console.log('[FusionX Timer] Synced timerState to cloud Firestore');
+      }).catch(function (err) {
+        console.warn('[FusionX Timer] Cloud sync failed:', err);
+      });
+    } else {
+      // Retry when FX_DOC becomes available
+      var retryCount = 0;
+      var retryTimer = setInterval(function () {
+        retryCount++;
+        if (window.FX_DOC) {
+          window.FX_DOC.set({ timerState: state }, { merge: true }).catch(function () {});
+          clearInterval(retryTimer);
+        } else if (retryCount > 20) {
+          clearInterval(retryTimer);
+        }
+      }, 250);
     }
     window.dispatchEvent(new CustomEvent('fx:timer-change', { detail: state }));
   }
 
   var currentState = loadState();
 
+  // Multi-tab sync on same device
   window.addEventListener('storage', function (e) {
     if (e.key === TIMER_KEY) {
       currentState = loadState();
@@ -55,15 +81,35 @@
     }
   });
 
+  // Event listener from site-live-sync
   window.addEventListener('fx:live-update', function (e) {
     if (e.detail && e.detail.timerState) {
-      currentState = Object.assign({}, DEFAULT_STATE, e.detail.timerState);
-      try {
-        localStorage.setItem(TIMER_KEY, JSON.stringify(currentState));
-      } catch (err) {}
-      window.dispatchEvent(new CustomEvent('fx:timer-change', { detail: currentState }));
+      applyIncomingTimerState(e.detail.timerState);
     }
   });
+
+  // Direct Firestore cross-device live subscription
+  function initCloudTimerSync() {
+    if (!window.FX_DOC) {
+      setTimeout(initCloudTimerSync, 200);
+      return;
+    }
+    try {
+      window.FX_DOC.onSnapshot(function (snap) {
+        if (snap.exists) {
+          var d = snap.data();
+          if (d && d.timerState) {
+            applyIncomingTimerState(d.timerState);
+          }
+        }
+      }, function (err) {
+        console.warn('[FusionX Timer] Firestore timer sync listener warning:', err);
+      });
+    } catch (err) {
+      console.warn('[FusionX Timer] Could not initialize Firestore timer snapshot:', err);
+    }
+  }
+  initCloudTimerSync();
 
   function getCalculatedTime() {
     var now = Date.now();
