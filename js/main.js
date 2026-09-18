@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (navLinks.classList.contains('active') && !navLinks.contains(e.target) && !navToggle.contains(e.target)) closeNav();
         });
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeNav(); });
-        window.addEventListener('resize', () => { if (window.innerWidth > 840) closeNav(); });
+        window.addEventListener('resize', () => { if (window.innerWidth > 1120) closeNav(); });
     }
 
     // Animated Counters on Scroll Into View

@@ -34,19 +34,17 @@
 window.FX_PUBLISHED_DATA = {
   registrationLink: 'https://forms.gle/c6d2iHY61EvM3fXK9',
   partners: [
-    {id:'p1', logo:'assets/gdg-logo.png', type:'Community Partner', eyebrow:'Together We Build', headingWhite:'Community', headingAccent:'Partners', desc:'We collaborate with forward-thinking organizations and communities to empower builders, innovators, and future leaders.', name:'Google Developer Groups', role:'Community Partner', partnerDesc:'Empowering student developers through learning, sharing, and building cutting-edge applications together.', linkText:'', linkUrl:''},
-    {id:'p2', logo:'assets/gcc-logo.png', type:'Organizing Partner', eyebrow:'Powering The Build', headingWhite:'Organizing', headingAccent:'Partners', desc:'Fostering programmatic excellence, peer learning, and hands-on developer experiences across the ecosystem.', name:'Growing Coders Club', role:'Organizing Partner', partnerDesc:'Building a community of passionate developers through workshops, hackathons, and collaborative projects.', linkText:'', linkUrl:''},
-    {id:'p3', logo:'partners/devfolio-mark.svg', type:'Platform Partner', eyebrow:'Ideas Today, Impact Tomorrow', headingWhite:'Platform', headingAccent:'Partners', desc:'We team up with platforms that power builders across the ecosystem, from first commit to demo day.', name:'Devfolio', role:'Platform Partner', partnerDesc:"Powering India's largest hackathons with seamless project submission, judging, and builder ecosystem tools.", linkText:'', linkUrl:''}
+    {id:'p1', logo:'assets/gdg-logo.png', type:'Community Partner', eyebrow:'Together We Build', headingWhite:'Community', headingAccent:'Partners', desc:'We collaborate with forward-thinking organizations and communities to empower builders, innovators, and future leaders.', name:'Google Developer Groups', role:'Community Partner', partnerDesc:'Empowering student developers through learning, sharing, and building cutting-edge applications together.', linkText:'', linkUrl:''}
   ],
   team: {
     order: ['GV'],
     groups: {
       GV: { title:'Guide the Vision', icon:'fa-graduation-cap', blurb:'Overall guidance & faculty direction', members:[
         {name:'Shri. CA. N.V. Natarajan', role:'Chairman of Institutions', tag:'Chief Patron', img:'assets/team/chairman.jpg'},
-        {name:'', role:'', tag:'Chief Patron', img:'assets/team/ccmam.jpg'},
+        {name:'Smt. MANGAI NATARAJAN', role:'Correspondent Paavai Educational Institutions', tag:'Chief Patron', img:'assets/team/ccmam.jpg'},
         {name:'Dr. M. Perm Kumar', role:'Principal of Paavai Engineering College', tag:'Patron', img:'assets/team/principal.jpg'},
         {name:'Dr. B. Venkatesan', role:'Head of IT', tag:'Convener', img:'assets/team/hod.jpg'},
-        {name:'Mr. R. Rakesh', role:'AP/IT', tag:'Faculty Co-ordinator', img:''},
+        {name:'Mr. R. Rakesh', role:'AP/IT', tag:'Faculty Co-ordinator', img:'assets/team/rakesh.jpeg'},
         {name:'Mrs. B. Deepa', role:'AP/IT', tag:'Faculty Co-ordinator', img:'assets/team/deepa.jpg'}
       ]}
     }

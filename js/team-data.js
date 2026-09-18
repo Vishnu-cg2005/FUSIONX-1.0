@@ -42,10 +42,10 @@
         blurb: 'Overall guidance & faculty direction',
         members: [
           { name: 'Shri. CA. N.V. Natarajan', role: 'Chairman of Institutions', tag: 'Chief Patron', img: 'assets/team/chairman.jpg' },
-          { name: '', role: '', tag: 'Chief Patron', img: 'assets/team/ccmam.jpg' },
+          { name: 'Smt. MANGAI NATARAJAN', role: 'Correspondent Paavai Educational Institutions', tag: 'Chief Patron', img: 'assets/team/ccmam.jpg' },
           { name: 'Dr. M. Perm Kumar', role: 'Principal of Paavai Engineering College', tag: 'Patron', img: 'assets/team/principal.jpg' },
           { name: 'Dr. B. Venkatesan', role: 'Head of IT', tag: 'Convener', img: 'assets/team/hod.jpg' },
-          { name: 'Mr. R. Rakesh', role: 'AP/IT', tag: 'Faculty Co-ordinator', img: '' },
+          { name: 'Mr. R. Rakesh', role: 'AP/IT', tag: 'Faculty Co-ordinator', img: 'assets/team/rakesh.jpeg' },
           { name: 'Mrs. B. Deepa', role: 'AP/IT', tag: 'Faculty Co-ordinator', img: 'assets/team/deepa.jpg' }
         ]
       }

@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0A0C10">
+  <title>Problem Statements &amp; Live Timer — FUSIONX 1.0</title>
+  <link rel="icon" type="image/png" href="fusionx-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <style>
+    :root {
+      --ps-accent: #FF5A00;
+      --ps-accent-red: #FF1E38;
+      --ps-bg: #060709;
+      --ps-surface: rgba(14, 17, 23, 0.85);
+      --ps-surface-hover: rgba(22, 27, 36, 0.95);
+      --ps-border: rgba(255, 255, 255, 0.1);
+      --ps-border-active: rgba(255, 90, 0, 0.5);
+
+      /* Track Accent Colors */
+      --track-campus: #00D2FF;
+      --track-sustainability: #00E676;
+      --track-social: #BD00FF;
+      --track-healthcare: #FF2E63;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--ps-bg) !important;
+      color: #F0F3F8;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding-top: 96px;
+      line-height: 1.6;
+    }
+
+    /* Ambient Background Glow */
+    .bg-mesh {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(circle 800px at 10% -10%, rgba(255, 90, 0, 0.12), transparent 70%),
+        radial-gradient(circle 700px at 90% 20%, rgba(255, 30, 56, 0.08), transparent 70%),
+        radial-gradient(circle 900px at 50% 80%, rgba(0, 210, 255, 0.05), transparent 70%);
+    }
+
+    .main-wrap {
+      position: relative;
+      z-index: 2;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px 20px 80px;
+    }
+
+    /* ============================================================
+       TOP LIVE STOPWATCH / TIMER HUD
+       ============================================================ */
+    .timer-hud-container {
+      background: linear-gradient(145deg, rgba(16, 19, 26, 0.92), rgba(10, 12, 16, 0.96));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 28px;
+      padding: clamp(24px, 4vw, 40px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 48px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .timer-hud-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--ps-accent), var(--ps-accent-red), transparent);
+    }
+
+    .timer-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 16px;
+    }
+
+    .timer-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      background: rgba(255, 90, 0, 0.12);
+      border: 1px solid rgba(255, 90, 0, 0.4);
+      color: #FF8A3D;
+    }
+
+    .status-beacon {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #00E676;
+      box-shadow: 0 0 10px #00E676;
+      animation: pulseGreen 1.5s infinite;
+    }
+
+    .status-beacon.held {
+      background: #FFB020;
+      box-shadow: 0 0 10px #FFB020;
+      animation: none;
+    }
+
+    .status-beacon.stopped {
+      background: #FF334B;
+      box-shadow: 0 0 10px #FF334B;
+      animation: none;
+    }
+
+    @keyframes pulseGreen {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    .timer-meta {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.82rem;
+      color: rgba(240, 243, 248, 0.7);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .timer-meta strong {
+      color: #fff;
+    }
+
+    /* Big Clock Display */
+    .digital-clock-grid {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(8px, 2vw, 24px);
+      margin: 16px 0 28px;
+      user-select: none;
+    }
+
+    .time-unit-box {
+      background: rgba(8, 10, 14, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: clamp(14px, 2.5vw, 24px) clamp(16px, 3vw, 36px);
+      text-align: center;
+      min-width: clamp(75px, 12vw, 130px);
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
+      position: relative;
+    }
+
+    .time-unit-box .digits {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(2.4rem, 6vw, 5.2rem);
+      font-weight: 800;
+      line-height: 1;
+      color: #FFFFFF;
+      text-shadow: 0 0 25px rgba(255, 90, 0, 0.4);
+      display: block;
+    }
+
+    .time-unit-box .label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(0.65rem, 1vw, 0.8rem);
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-top: 8px;
+      display: block;
+      text-transform: uppercase;
+    }
+
+    .time-colon {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(2rem, 5vw, 4.2rem);
+      font-weight: 700;
+      color: var(--ps-accent);
+      animation: blinkColon 1s infinite;
+      line-height: 1;
+    }
+
+    @keyframes blinkColon {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.25; }
+    }
+
+    /* Progress bar */
+    .timer-progress-track {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 100px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .timer-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #FF5A00, #FF1E38, #00D2FF);
+      border-radius: 100px;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 12px rgba(255, 90, 0, 0.6);
+    }
+
+    .timer-footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.8rem;
+      color: rgba(240, 243, 248, 0.65);
+    }
+
+    .admin-note-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.04);
+      padding: 6px 16px;
+      border-radius: 100px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .admin-note-badge i {
+      color: var(--ps-accent);
+    }
+
+    /* ============================================================
+       PROBLEM STATEMENTS SHOWCASE SECTION
+       ============================================================ */
+    .ps-header {
+      text-align: center;
+      max-width: 860px;
+      margin: 0 auto 40px;
+    }
+
+    .ps-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ps-accent);
+      background: rgba(255, 90, 0, 0.1);
+      border: 1px solid rgba(255, 90, 0, 0.35);
+      border-radius: 100px;
+      padding: 8px 18px;
+      margin-bottom: 16px;
+    }
+
+    .ps-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+      color: #FFFFFF;
+      margin-bottom: 14px;
+    }
+
+    .ps-title .accent {
+      color: var(--ps-accent);
+      text-shadow: 0 0 25px rgba(255, 90, 0, 0.5);
+    }
+
+    .ps-subtitle {
+      font-size: 1.02rem;
+      color: rgba(240, 243, 248, 0.75);
+      line-height: 1.6;
+    }
+
+    /* Filter & Search Bar */
+    .ps-controls {
+      background: rgba(14, 17, 23, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 16px 20px;
+      margin-bottom: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .ps-search-box {
+      position: relative;
+      width: 100%;
+    }
+
+    .ps-search-box i {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 1rem;
+    }
+
+    .ps-search-input {
+      width: 100%;
+      padding: 12px 18px 12px 46px;
+      background: rgba(8, 10, 14, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      color: #fff;
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .ps-search-input:focus {
+      border-color: var(--ps-accent);
+      box-shadow: 0 0 16px rgba(255, 90, 0, 0.25);
+    }
+
+    .ps-filter-pills {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(240, 243, 248, 0.75);
+      padding: 8px 16px;
+      border-radius: 100px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .filter-pill:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .filter-pill.active {
+      background: var(--ps-accent);
+      color: #fff;
+      border-color: var(--ps-accent);
+      box-shadow: 0 0 16px rgba(255, 90, 0, 0.4);
+    }
+
+    .ps-count-badge {
+      font-size: 0.75rem;
+      padding: 2px 7px;
+      border-radius: 100px;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    /* Grid of Problem Cards */
+    .ps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 24px;
+    }
+
+    .ps-card {
+      background: var(--ps-surface);
+      border: 1px solid var(--ps-border);
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    .ps-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--ps-accent);
+      opacity: 0.7;
+      transition: all 0.3s ease;
+    }
+
+    .ps-card[data-track="campus"]::before { background: var(--track-campus); }
+    .ps-card[data-track="sustainability"]::before { background: var(--track-sustainability); }
+    .ps-card[data-track="social"]::before { background: var(--track-social); }
+    .ps-card[data-track="healthcare"]::before { background: var(--track-healthcare); }
+
+    .ps-card:hover {
+      transform: translateY(-4px);
+      background: var(--ps-surface-hover);
+      border-color: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
+    }
+
+    .ps-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      gap: 12px;
+    }
+
+    .ps-id-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #FFFFFF;
+      letter-spacing: 0.5px;
+    }
+
+    .ps-track-tag {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 100px;
+      background: rgba(255, 255, 255, 0.06);
+      color: rgba(240, 243, 248, 0.8);
+      white-space: nowrap;
+    }
+
+    .ps-card[data-track="campus"] .ps-track-tag { color: var(--track-campus); background: rgba(0, 210, 255, 0.1); border: 1px solid rgba(0, 210, 255, 0.25); }
+    .ps-card[data-track="sustainability"] .ps-track-tag { color: var(--track-sustainability); background: rgba(0, 230, 118, 0.1); border: 1px solid rgba(0, 230, 118, 0.25); }
+    .ps-card[data-track="social"] .ps-track-tag { color: var(--track-social); background: rgba(189, 0, 255, 0.1); border: 1px solid rgba(189, 0, 255, 0.25); }
+    .ps-card[data-track="healthcare"] .ps-track-tag { color: var(--track-healthcare); background: rgba(255, 46, 99, 0.1); border: 1px solid rgba(255, 46, 99, 0.25); }
+
+    .ps-title-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: #FFFFFF;
+      margin-bottom: 16px;
+    }
+
+    .ps-body {
+      font-size: 0.88rem;
+      color: rgba(240, 243, 248, 0.85);
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .ps-section-box {
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 10px;
+      padding: 10px 14px;
+      border-left: 2px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .ps-section-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ps-card-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 14px;
+      margin-top: auto;
+    }
+
+    .copy-ps-btn {
+      width: 100%;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: rgba(240, 243, 248, 0.85);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .copy-ps-btn:hover {
+      background: rgba(255, 90, 0, 0.12);
+      color: #fff;
+      border-color: rgba(255, 90, 0, 0.4);
+      transform: translateY(-1px);
+    }
+
+    /* Toast Notification */
+    .ps-toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(50px);
+      background: #171717;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 100px;
+      border: 1px solid var(--ps-accent);
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .ps-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      .ps-grid {
+        grid-template-columns: 1fr;
+      }
+      .time-unit-box {
+        min-width: 60px;
+        padding: 10px 12px;
+      }
+      .digital-clock-grid {
+        gap: 6px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Ambient background -->
+  <div class="bg-mesh"></div>
+
+  <!-- Header Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo">
+        <span class="logo-text">FUSIONX <span class="accent-badge">1.0</span></span>
+        <span class="brand-divider"></span>
+        <span class="gdg-icon">
+          <img src="assets/gdg-logo.png" alt="GDG logo">
+        </span>
+        <span class="gdg-text">GDG</span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" class="nav-link">HOME</a>
+        <a href="#timer-section" class="nav-link">HACKATHON TIMER</a>
+        <a href="#statements-section" class="nav-link">PROBLEM STATEMENTS</a>
+        <a href="index.html#prizes" class="nav-link">PRIZES</a>
+        <a href="index.html#juries" class="nav-link">JURIES</a>
+        <a href="index.html#team" class="nav-link">VISION</a>
+      </div>
+      <div class="nav-actions">
+        <a href="https://forms.gle/c6d2iHY61EvM3fXK9" target="_blank" rel="noopener" data-register-link class="btn btn-primary nav-btn magnetic">REGISTER NOW <i class="fa-solid fa-arrow-right"></i></a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main-wrap">
+    <!-- ============================================================
+         LIVE STOPWATCH / TIMER HUD (ADMIN-CONTROLLED)
+         ============================================================ -->
+    <section class="timer-hud-container" id="timer-section">
+      <div class="timer-header-row">
+        <div class="timer-status-badge" id="timerBadge">
+          <span class="status-beacon" id="timerBeacon"></span>
+          <span id="timerStatusText">24H HACKATHON LIVE TIMER</span>
+        </div>
+        <div class="timer-meta">
+          <span>Target: <strong>24 Hours</strong></span> &bull;
+          <span>Mode: <strong id="timerModeText">Countdown</strong></span>
+        </div>
+      </div>
+
+      <!-- Giant Digital Clock Display -->
+      <div class="digital-clock-grid">
+        <div class="time-unit-box">
+          <span class="digits" id="timerHours">24</span>
+          <span class="label">Hours</span>
+        </div>
+        <span class="time-colon">:</span>
+        <div class="time-unit-box">
+          <span class="digits" id="timerMinutes">00</span>
+          <span class="label">Minutes</span>
+        </div>
+        <span class="time-colon">:</span>
+        <div class="time-unit-box">
+          <span class="digits" id="timerSeconds">00</span>
+          <span class="label">Seconds</span>
+        </div>
+        <span class="time-colon">:</span>
+        <div class="time-unit-box">
+          <span class="digits" id="timerMs">00</span>
+          <span class="label">MS</span>
+        </div>
+      </div>
+
+      <!-- Linear Progress Bar -->
+      <div class="timer-progress-track">
+        <div class="timer-progress-fill" id="timerProgressFill"></div>
+      </div>
+
+      <div class="timer-footer-row">
+        <div class="admin-note-badge">
+          <i class="fa-solid fa-lock"></i>
+          <span>Official Hackathon Clock — Start, Stop, Hold &amp; Restart managed strictly via Admin Panel.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PROBLEM STATEMENTS SHOWCASE
+         ============================================================ -->
+    <section id="statements-section">
+      <div class="ps-header">
+        <div class="ps-eyebrow">
+          <i class="fa-solid fa-bolt"></i> FUSIONX 1.0 &bull; 24 HOURS HACKATHON
+        </div>
+        <h1 class="ps-title">
+          PROBLEM <span class="accent">STATEMENTS</span>
+        </h1>
+        <p class="ps-subtitle">
+          Paavai Engineering College, Namakkal &bull; Department of Information Technology<br>
+          60 carefully curated problem statements across 4 core technological disciplines.
+        </p>
+      </div>
+
+      <!-- Controls Bar: Search & Track Filters -->
+      <div class="ps-controls">
+        <div class="ps-search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" class="ps-search-input" id="psSearchInput" placeholder="Search problem statements by keyword, domain, or PS-ID (e.g. 'Academic Risk', 'Waste', 'SCE-01')...">
+        </div>
+
+        <div class="ps-filter-pills" id="trackFilterPills">
+          <button class="filter-pill active" data-filter="all">
+            All Tracks <span class="ps-count-badge" id="countAll">60</span>
+          </button>
+          <button class="filter-pill" data-filter="campus">
+            <i class="fa-solid fa-graduation-cap" style="color:var(--track-campus)"></i> Smart Campus &amp; Education <span class="ps-count-badge">15</span>
+          </button>
+          <button class="filter-pill" data-filter="sustainability">
+            <i class="fa-solid fa-leaf" style="color:var(--track-sustainability)"></i> Sustainability &amp; Environment <span class="ps-count-badge">15</span>
+          </button>
+          <button class="filter-pill" data-filter="social">
+            <i class="fa-solid fa-hands-holding-circle" style="color:var(--track-social)"></i> AI for Social Good <span class="ps-count-badge">15</span>
+          </button>
+          <button class="filter-pill" data-filter="healthcare">
+            <i class="fa-solid fa-heart-pulse" style="color:var(--track-healthcare)"></i> Healthcare &amp; Medical <span class="ps-count-badge">15</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Cards Grid Mount -->
+      <div class="ps-grid" id="psGrid"></div>
+    </section>
+  </main>
+
+  <!-- Toast Notification -->
+  <div class="ps-toast" id="psToast">Problem Statement copied to clipboard!</div>
+
+  <!-- Scripts -->
+  <script src="js/problem-data.js"></script>
+  <script src="js/timer-sync.js"></script>
+  <script src="js/site-live-sync.js"></script>
+
+  <script>
+    // -------------------------------------------------------------
+    // Live Timer Display Renderer
+    // -------------------------------------------------------------
+    (function () {
+      var timerHours = document.getElementById('timerHours');
+      var timerMinutes = document.getElementById('timerMinutes');
+      var timerSeconds = document.getElementById('timerSeconds');
+      var timerMs = document.getElementById('timerMs');
+      var timerProgressFill = document.getElementById('timerProgressFill');
+      var timerBadge = document.getElementById('timerBadge');
+      var timerBeacon = document.getElementById('timerBeacon');
+      var timerStatusText = document.getElementById('timerStatusText');
+      var timerModeText = document.getElementById('timerModeText');
+
+      function updateClock() {
+        if (!window.FX_Timer) return;
+        var t = window.FX_Timer.getTime();
+
+        timerHours.textContent = t.hours;
+        timerMinutes.textContent = t.minutes;
+        timerSeconds.textContent = t.seconds;
+        timerMs.textContent = t.ms;
+        timerProgressFill.style.width = t.progressPct + '%';
+
+        if (t.status === 'running') {
+          timerBeacon.className = 'status-beacon';
+          timerStatusText.textContent = 'HACKATHON IN PROGRESS';
+        } else if (t.status === 'held') {
+          timerBeacon.className = 'status-beacon held';
+          timerStatusText.textContent = 'TIMER ON HOLD / PAUSED';
+        } else if (t.status === 'completed') {
+          timerBeacon.className = 'status-beacon stopped';
+          timerStatusText.textContent = 'HACKATHON CONCLUDED';
+        } else {
+          timerBeacon.className = 'status-beacon stopped';
+          timerStatusText.textContent = 'TIMER STOPPED';
+        }
+
+        timerModeText.textContent = t.mode === 'countdown' ? '24h Countdown' : 'Stopwatch (Count-Up)';
+      }
+
+      setInterval(updateClock, 35); // Smooth 30fps refresh for ms digits
+      window.addEventListener('fx:timer-change', updateClock);
+    })();
+
+    // -------------------------------------------------------------
+    // Problem Statements Search & Filtering
+    // -------------------------------------------------------------
+    (function () {
+      var grid = document.getElementById('psGrid');
+      var searchInput = document.getElementById('psSearchInput');
+      var filterPills = document.querySelectorAll('#trackFilterPills .filter-pill');
+      var toast = document.getElementById('psToast');
+      var toastTimer = null;
+
+      var currentFilter = 'all';
+      var searchQuery = '';
+
+      function showToast(msg) {
+        toast.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          toast.classList.remove('show');
+        }, 2200);
+      }
+
+      function esc(s) {
+        var d = document.createElement('div');
+        d.textContent = s == null ? '' : s;
+        return d.innerHTML;
+      }
+
+      function renderCards() {
+        var items = window.FX_PROBLEM_STATEMENTS || [];
+        var filtered = items.filter(function (item) {
+          var matchesTrack = currentFilter === 'all' || item.trackId === currentFilter;
+          var matchesSearch = true;
+          if (searchQuery) {
+            var q = searchQuery.toLowerCase();
+            var haystack = (item.id + ' ' + item.title + ' ' + item.problem + ' ' + item.solution + ' ' + item.outcome + ' ' + item.track).toLowerCase();
+            matchesSearch = haystack.indexOf(q) !== -1;
+          }
+          return matchesTrack && matchesSearch;
+        });
+
+        if (!filtered.length) {
+          grid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 60px 20px; background: rgba(14,17,23,0.6); border-radius: 18px; border: 1px dashed rgba(255,255,255,0.15);">'
+            + '<i class="fa-solid fa-magnifying-glass" style="font-size: 2.2rem; color: rgba(255,255,255,0.3); margin-bottom: 14px; display:block;"></i>'
+            + '<h3 style="font-size: 1.2rem; margin-bottom: 8px;">No problem statements matched your search</h3>'
+            + '<p style="color: rgba(240,243,248,0.6); font-size: 0.9rem;">Try adjusting your query or resetting the track filter.</p>'
+            + '</div>';
+          return;
+        }
+
+        grid.innerHTML = filtered.map(function (p) {
+          return '<article class="ps-card" data-track="' + esc(p.trackId) + '">'
+            + '<div>'
+            + '  <div class="ps-card-head">'
+            + '    <span class="ps-id-badge">' + esc(p.id) + '</span>'
+            + '    <span class="ps-track-tag">' + esc(p.track) + '</span>'
+            + '  </div>'
+            + '  <h3 class="ps-title-text">' + esc(p.number) + '. ' + esc(p.title) + '</h3>'
+            + '  <div class="ps-body">'
+            + '    <div class="ps-section-box">'
+            + '      <div class="ps-section-label"><i class="fa-solid fa-triangle-exclamation"></i> Core Problem</div>'
+            + '      <p>' + esc(p.problem) + '</p>'
+            + '    </div>'
+            + '    <div class="ps-section-box">'
+            + '      <div class="ps-section-label"><i class="fa-solid fa-microchip"></i> Proposed Solution</div>'
+            + '      <p>' + esc(p.solution) + '</p>'
+            + '    </div>'
+            + '    <div class="ps-section-box">'
+            + '      <div class="ps-section-label"><i class="fa-solid fa-bullseye"></i> Expected Outcome</div>'
+            + '      <p>' + esc(p.outcome) + '</p>'
+            + '    </div>'
+            + '  </div>'
+            + '</div>'
+            + '<div class="ps-card-actions">'
+            + '  <button type="button" class="copy-ps-btn" data-action="copy" data-id="' + esc(p.id) + '">'
+            + '    <i class="fa-regular fa-copy"></i> Copy Details'
+            + '  </button>'
+            + '</div>'
+            + '</article>';
+        }).join('');
+      }
+
+      // Filter pills click
+      filterPills.forEach(function (pill) {
+        pill.addEventListener('click', function () {
+          filterPills.forEach(function (p) { p.classList.remove('active'); });
+          pill.classList.add('active');
+          currentFilter = pill.getAttribute('data-filter');
+          renderCards();
+        });
+      });
+
+      // Search typing
+      searchInput.addEventListener('input', function (e) {
+        searchQuery = e.target.value.trim();
+        renderCards();
+      });
+
+      // Copy problem details
+      grid.addEventListener('click', function (e) {
+        var btn = e.target.closest('button[data-action="copy"]');
+        if (!btn) return;
+        var id = btn.getAttribute('data-id');
+        var item = (window.FX_PROBLEM_STATEMENTS || []).find(function (x) { return x.id === id; });
+        if (!item) return;
+
+        var text = "FUSIONX 1.0 — Problem Statement: " + item.id + "\n"
+          + "Track: " + item.track + "\n"
+          + "Title: " + item.title + "\n\n"
+          + "1. Core Problem:\n" + item.problem + "\n\n"
+          + "2. Proposed Solution:\n" + item.solution + "\n\n"
+          + "3. Expected Outcome:\n" + item.outcome + "\n\n"
+          + "Official Site: https://fusionx.netlify.app";
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () {
+            showToast("Copied " + item.id + " details to clipboard!");
+          });
+        } else {
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          showToast("Copied " + item.id + " details to clipboard!");
+        }
+      });
+
+      renderCards();
+    })();
+
+    // Mobile nav toggle for navbar
+    (function () {
+      var navToggle = document.getElementById('navToggle');
+      var navLinks = document.getElementById('navLinks');
+      if (navToggle && navLinks) {
+        navToggle.addEventListener('click', function () {
+          navLinks.classList.toggle('active');
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

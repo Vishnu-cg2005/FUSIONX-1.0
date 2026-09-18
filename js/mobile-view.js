@@ -379,6 +379,7 @@ footer{margin-top:38px; padding:30px 18px 26px; border-top:1px solid var(--line)
   <div class="nav-sheet">
     <button class="nav-close" id="navClose" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button>
     <a href="#about" class="nav-link">About <i class="fa-solid fa-arrow-right"></i></a>
+    <a href="problem-statements.html" target="_blank" class="nav-link" style="color:var(--orange);font-weight:700;">Problem Statement <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.8rem;"></i></a>
     <a href="#timeline" class="nav-link">Timeline <i class="fa-solid fa-arrow-right"></i></a>
     <a href="#tracks" class="nav-link">Tracks <i class="fa-solid fa-arrow-right"></i></a>
     <a href="#prizes" class="nav-link">Prizes <i class="fa-solid fa-arrow-right"></i></a>
@@ -400,6 +401,7 @@ footer{margin-top:38px; padding:30px 18px 26px; border-top:1px solid var(--line)
     <p class="hero-desc">FusionX 1.0 is a 24-hour hackathon celebrating the spirit of Programmers' Day — where ideas turn into innovation and developers build solutions for real-world challenges.</p>
     <div class="hero-ctas">
       <a href="https://forms.gle/c6d2iHY61EvM3fXK9" target="_blank" rel="noopener" data-register-link class="btn btn-primary">Register Now <i class="fa-solid fa-arrow-right"></i></a>
+      <a href="problem-statements.html" target="_blank" class="btn btn-secondary" style="border-color:rgba(255,90,0,0.5);background:rgba(255,90,0,0.1);"><i class="fa-solid fa-lightbulb" style="color:var(--orange);"></i> Problem Statement</a>
       <a href="#tracks" class="btn btn-secondary">Explore Tracks <i class="fa-solid fa-arrow-right"></i></a>
     </div>
   </div>
@@ -693,9 +695,7 @@ footer{margin-top:38px; padding:30px 18px 26px; border-top:1px solid var(--line)
 
   var PARTNERS_KEY = 'fusionx_partners_store';
   var FALLBACK_PARTNERS = [
-    {id:'p1', logo:'assets/gdg-logo.png', name:'Google Developer Groups', role:'Community Partner', partnerDesc:'Empowering student developers through learning, sharing, and building cutting-edge applications together.'},
-    {id:'p2', logo:'assets/gcc-logo.png', name:'Growing Coders Club', role:'Organizing Partner', partnerDesc:'Building a community of passionate developers through workshops, hackathons, and collaborative projects.'},
-    {id:'p3', logo:'partners/devfolio-mark.svg', name:'Devfolio', role:'Platform Partner', partnerDesc:"Powering India's largest hackathons with seamless submission, judging, and builder ecosystem tools."}
+    {id:'p1', logo:'assets/gdg-logo.png', name:'Google Developer Groups', role:'Community Partner', partnerDesc:'Empowering student developers through learning, sharing, and building cutting-edge applications together.'}
   ];
 
   // Priority: 1) unpublished draft in this browser (localStorage, admin

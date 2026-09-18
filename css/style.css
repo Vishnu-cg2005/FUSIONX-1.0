@@ -81,19 +81,20 @@ html, body {
 /* Header Navbar */
 .navbar {
     position: fixed;
-    top: 20px;
+    top: 16px;
     left: 50%;
     transform: translateX(-50%);
-    width: 92%;
-    max-width: 1280px;
+    width: min(calc(100% - 32px), 1420px);
+    max-width: 1420px;
     z-index: 1000;
-    background: rgba(10, 12, 16, 0.85);
+    background: rgba(10, 12, 16, 0.92);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 100px;
-    padding: 12px 32px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    padding: 7px 14px 7px 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    box-sizing: border-box;
 }
 
 .nav-container {
@@ -101,23 +102,55 @@ html, body {
     align-items: center !important;
     justify-content: space-between !important;
     width: 100% !important;
+    gap: 8px !important;
 }
 
 .brand-logo {
     display: inline-flex !important;
     align-items: center !important;
-    gap: 10px !important;
+    gap: 8px !important;
     text-decoration: none !important;
     color: #ffffff !important;
     font-weight: 800 !important;
-    font-size: 1.2rem !important;
-    letter-spacing: 1.5px !important;
+    font-size: clamp(1rem, 1.1vw, 1.15rem) !important;
+    letter-spacing: 1.2px !important;
     white-space: nowrap !important;
     flex-shrink: 0 !important;
+    line-height: 1 !important;
+}
+
+.brand-divider {
+    display: inline-block !important;
+    width: 1px !important;
+    height: 16px !important;
+    background: rgba(255, 255, 255, 0.18) !important;
+    margin: 0 2px !important;
+}
+
+.gdg-icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+}
+
+.gdg-icon img {
+    height: 20px !important;
+    width: auto !important;
+    object-fit: contain !important;
+    display: block !important;
+}
+
+.gdg-text {
+    font-size: 0.88rem !important;
+    font-weight: 700 !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    letter-spacing: 1px !important;
+    line-height: 1 !important;
 }
 
 .nav-gcc-logo {
-    height: 36px;
+    height: 30px;
     width: auto;
     object-fit: contain;
     filter: drop-shadow(0 0 10px rgba(255, 90, 0, 0.5));
@@ -133,6 +166,7 @@ html, body {
     display: inline-flex !important;
     align-items: center !important;
     gap: 6px !important;
+    line-height: 1 !important;
 }
 
 .logo-icon, .accent-badge {
@@ -140,27 +174,31 @@ html, body {
 }
 
 .nav-links {
-    display: flex;
+    display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 32px !important;
+    gap: clamp(6px, 0.9vw, 18px) !important;
     flex: 1 !important;
-    margin: 0 24px !important;
+    margin: 0 clamp(4px, 0.8vw, 14px) !important;
     padding: 0 !important;
     list-style: none !important;
+    min-width: 0 !important;
 }
 
 .nav-link {
     color: rgba(240, 243, 248, 0.85) !important;
     text-decoration: none !important;
-    font-size: 0.85rem !important;
+    font-size: clamp(0.68rem, 0.76vw, 0.8rem) !important;
     font-weight: 700 !important;
-    letter-spacing: 1.2px !important;
+    letter-spacing: 0.5px !important;
     text-transform: uppercase !important;
-    transition: all 0.3s ease !important;
+    transition: all 0.25s ease !important;
     position: relative !important;
-    padding: 6px 0 !important;
+    padding: 6px 2px !important;
     white-space: nowrap !important;
+    line-height: 1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
 }
 
 .nav-link:hover {
@@ -185,18 +223,27 @@ html, body {
     width: 100% !important;
 }
 
+.nav-link-cta,
+.nav-link.nav-link-cta {
+    display: none !important;
+}
+
 .nav-actions {
     display: flex !important;
     align-items: center !important;
-    gap: 12px !important;
+    gap: 8px !important;
     flex-shrink: 0 !important;
 }
 
 .nav-btn {
-    padding: 10px 24px !important;
-    font-size: 0.85rem !important;
-    letter-spacing: 0.5px !important;
+    padding: 8px 16px !important;
+    font-size: clamp(0.74rem, 0.8vw, 0.82rem) !important;
+    letter-spacing: 0.4px !important;
     white-space: nowrap !important;
+    line-height: 1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 .nav-toggle {
@@ -207,6 +254,7 @@ html, body {
     font-size: 1.25rem;
     cursor: pointer;
     padding: 6px;
+    line-height: 1;
 }
 
 /* Buttons */
