@@ -165,12 +165,34 @@
     }
   }
 
+  function getCurrentElapsed() {
+    var now = Date.now();
+    var elapsed = currentState.elapsedBeforePauseMs || 0;
+    if (currentState.status === 'running' && currentState.startTime) {
+      elapsed += Math.max(0, now - currentState.startTime);
+    }
+    return elapsed;
+  }
+
+  function applyNewElapsed(newElapsed) {
+    newElapsed = Math.max(0, newElapsed);
+    if (currentState.status === 'running') {
+      currentState.startTime = Date.now();
+      currentState.elapsedBeforePauseMs = newElapsed;
+    } else {
+      currentState.startTime = null;
+      currentState.elapsedBeforePauseMs = newElapsed;
+    }
+    saveState(currentState);
+  }
+
   // Exposed API
   window.FX_Timer = {
     getState: function () {
       return Object.assign({}, currentState);
     },
     getTime: getCalculatedTime,
+    getCurrentElapsed: getCurrentElapsed,
 
     // Admin-Only actions:
     start: function () {
@@ -217,6 +239,89 @@
       currentState.elapsedBeforePauseMs = 0;
       currentState.startTime = null;
       saveState(currentState);
+    },
+
+    // Set countdown or stopwatch numbers directly (HH:MM:SS)
+    setTime: function (hours, minutes, seconds) {
+      var h = Math.max(0, parseInt(hours, 10) || 0);
+      var m = Math.max(0, Math.min(59, parseInt(minutes, 10) || 0));
+      var s = Math.max(0, Math.min(59, parseInt(seconds, 10) || 0));
+      var targetMs = ((h * 3600) + (m * 60) + s) * 1000;
+
+      if (currentState.mode === 'countdown') {
+        var totalDur = currentState.durationMs || DEFAULT_DURATION_MS;
+        if (targetMs > totalDur) {
+          currentState.durationMs = targetMs;
+          applyNewElapsed(0);
+        } else {
+          var newElapsed = totalDur - targetMs;
+          applyNewElapsed(newElapsed);
+        }
+      } else {
+        // Stopwatch mode: setting time directly sets elapsed
+        applyNewElapsed(targetMs);
+      }
+    },
+
+    // Move time forward (fast-forward clock / advance time elapsed)
+    stepForward: function (seconds) {
+      var sec = parseFloat(seconds) || 0;
+      if (sec <= 0) return;
+      var curElapsed = getCurrentElapsed();
+      var deltaMs = Math.round(sec * 1000);
+      var totalDur = currentState.durationMs || DEFAULT_DURATION_MS;
+
+      if (currentState.mode === 'countdown') {
+        var newElapsed = Math.min(totalDur, curElapsed + deltaMs);
+        applyNewElapsed(newElapsed);
+      } else {
+        applyNewElapsed(curElapsed + deltaMs);
+      }
+    },
+
+    // Move time backward (rewind clock / increase remaining time)
+    stepBackward: function (seconds) {
+      var sec = parseFloat(seconds) || 0;
+      if (sec <= 0) return;
+      var curElapsed = getCurrentElapsed();
+      var deltaMs = Math.round(sec * 1000);
+
+      if (currentState.mode === 'countdown') {
+        if (curElapsed >= deltaMs) {
+          applyNewElapsed(curElapsed - deltaMs);
+        } else {
+          // Rewound past start, expand duration to preserve remaining
+          var extra = deltaMs - curElapsed;
+          currentState.durationMs = (currentState.durationMs || DEFAULT_DURATION_MS) + extra;
+          applyNewElapsed(0);
+        }
+      } else {
+        applyNewElapsed(Math.max(0, curElapsed - deltaMs));
+      }
+    },
+
+    // Explicit Add / Subtract remaining time helpers
+    addRemaining: function (seconds) {
+      var sec = parseFloat(seconds) || 0;
+      if (sec <= 0) return;
+      this.stepBackward(sec);
+    },
+
+    deductRemaining: function (seconds) {
+      var sec = parseFloat(seconds) || 0;
+      if (sec <= 0) return;
+      this.stepForward(sec);
+    },
+
+    // General directional adjuster
+    adjustTime: function (seconds, direction) {
+      var sec = parseFloat(seconds) || 0;
+      if (sec <= 0) return;
+      if (direction === 'forward' || direction === 'advance' || direction === 'fastforward') {
+        this.stepForward(sec);
+      } else {
+        this.stepBackward(sec);
+      }
     },
 
     setMode: function (mode) {

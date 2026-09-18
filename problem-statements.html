@@ -264,6 +264,62 @@
       color: var(--ps-accent);
     }
 
+    .ps-admin-quickbar {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(255, 90, 0, 0.4);
+      border-radius: 100px;
+      padding: 5px 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+      flex-wrap: wrap;
+    }
+    .ps-admin-tag {
+      font-size: 0.72rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      color: var(--ps-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-right: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .btn-ps-quick {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-ps-quick:hover {
+      background: rgba(255, 90, 0, 0.25);
+      border-color: var(--ps-accent);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+    .btn-ps-toggle {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.35);
+      color: #34d399;
+    }
+    .btn-ps-portal {
+      background: linear-gradient(135deg, rgba(255, 90, 0, 0.25), rgba(255, 30, 56, 0.25));
+      border-color: rgba(255, 90, 0, 0.4);
+      color: #ffaa80;
+    }
+
     /* ============================================================
        PROBLEM STATEMENTS SHOWCASE SECTION
        ============================================================ */
@@ -671,9 +727,18 @@
       </div>
 
       <div class="timer-footer-row">
-        <div class="admin-note-badge">
-          <i class="fa-solid fa-lock"></i>
-          <span>Official Hackathon Clock — Start, Stop, Hold &amp; Restart managed strictly via Admin Panel.</span>
+        <div class="admin-note-badge" id="psAdminNote">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span>Official Hackathon Mission Clock &bull; Controls strictly restricted to <a href="admin-portal.html" style="color:var(--ps-accent);text-decoration:underline;font-weight:600;">Admin Panel</a></span>
+        </div>
+        <div class="ps-admin-quickbar" id="psAdminQuickBar" style="display:none;">
+          <span class="ps-admin-tag"><i class="fa-solid fa-user-shield"></i> Quick Controls:</span>
+          <button type="button" class="btn-ps-quick" onclick="window.FX_Timer && window.FX_Timer.stepBackward(300)" title="Rewind 5 minutes">&#9194; -5m</button>
+          <button type="button" class="btn-ps-quick" onclick="window.FX_Timer && window.FX_Timer.stepBackward(60)" title="Rewind 1 minute">&#9194; -1m</button>
+          <button type="button" class="btn-ps-quick btn-ps-toggle" id="psBtnTogglePlay" onclick="toggleTimerPlay()" title="Start or Pause Timer">&#9654; Start</button>
+          <button type="button" class="btn-ps-quick" onclick="window.FX_Timer && window.FX_Timer.stepForward(60)" title="Advance 1 minute">+1m &#9193;</button>
+          <button type="button" class="btn-ps-quick" onclick="window.FX_Timer && window.FX_Timer.stepForward(300)" title="Advance 5 minutes">+5m &#9193;</button>
+          <a href="admin-portal.html" class="btn-ps-quick btn-ps-portal" title="Open full admin timing console">&#9881; Console &#8599;</a>
         </div>
       </div>
     </section>
@@ -752,6 +817,30 @@
       var timerStatusText = document.getElementById('timerStatusText');
       var timerModeText = document.getElementById('timerModeText');
 
+      var psAdminQuickBar = document.getElementById('psAdminQuickBar');
+      var psBtnTogglePlay = document.getElementById('psBtnTogglePlay');
+
+      function checkAdminHud() {
+        var isAuth = false;
+        try {
+          isAuth = sessionStorage.getItem('fusionx_admin_session_auth') === 'auth_active';
+        } catch (e) {}
+        if (psAdminQuickBar) {
+          psAdminQuickBar.style.display = isAuth ? 'inline-flex' : 'none';
+        }
+      }
+
+      window.toggleTimerPlay = function () {
+        if (!window.FX_Timer) return;
+        var st = window.FX_Timer.getState();
+        if (st.status === 'running') {
+          window.FX_Timer.hold();
+        } else {
+          window.FX_Timer.start();
+        }
+        updateClock();
+      };
+
       function updateClock() {
         if (!window.FX_Timer) return;
         var t = window.FX_Timer.getTime();
@@ -765,20 +854,46 @@
         if (t.status === 'running') {
           timerBeacon.className = 'status-beacon';
           timerStatusText.textContent = 'HACKATHON IN PROGRESS';
+          if (psBtnTogglePlay) {
+            psBtnTogglePlay.innerHTML = '&#10074;&#10074; Pause';
+            psBtnTogglePlay.style.color = '#fbbf24';
+            psBtnTogglePlay.style.borderColor = 'rgba(251, 191, 36, 0.4)';
+            psBtnTogglePlay.style.background = 'rgba(251, 191, 36, 0.15)';
+          }
         } else if (t.status === 'held') {
           timerBeacon.className = 'status-beacon held';
           timerStatusText.textContent = 'TIMER ON HOLD / PAUSED';
+          if (psBtnTogglePlay) {
+            psBtnTogglePlay.innerHTML = '&#9654; Resume';
+            psBtnTogglePlay.style.color = '#34d399';
+            psBtnTogglePlay.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+            psBtnTogglePlay.style.background = 'rgba(16, 185, 129, 0.15)';
+          }
         } else if (t.status === 'completed') {
           timerBeacon.className = 'status-beacon stopped';
           timerStatusText.textContent = 'HACKATHON CONCLUDED';
+          if (psBtnTogglePlay) {
+            psBtnTogglePlay.innerHTML = '&#9654; Start';
+            psBtnTogglePlay.style.color = '#34d399';
+            psBtnTogglePlay.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+            psBtnTogglePlay.style.background = 'rgba(16, 185, 129, 0.15)';
+          }
         } else {
           timerBeacon.className = 'status-beacon stopped';
           timerStatusText.textContent = 'TIMER STOPPED';
+          if (psBtnTogglePlay) {
+            psBtnTogglePlay.innerHTML = '&#9654; Start';
+            psBtnTogglePlay.style.color = '#34d399';
+            psBtnTogglePlay.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+            psBtnTogglePlay.style.background = 'rgba(16, 185, 129, 0.15)';
+          }
         }
 
         timerModeText.textContent = t.mode === 'countdown' ? '24h Countdown' : 'Stopwatch (Count-Up)';
       }
 
+      checkAdminHud();
+      setInterval(checkAdminHud, 2000);
       setInterval(updateClock, 35); // Smooth 30fps refresh for ms digits
       window.addEventListener('fx:timer-change', updateClock);
     })();

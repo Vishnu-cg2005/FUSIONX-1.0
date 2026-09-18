@@ -327,6 +327,290 @@ input[type="file"]{display:none;}
 }
 .btn-timer-reset:hover { background: rgba(255,255,255,0.12); }
 
+/* Timer Direct Editor & Forward/Backward Controls */
+.timer-editor-box {
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 18px 0 22px;
+}
+.timer-editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.timer-editor-title {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.timer-editor-hint {
+  font-size: 11.5px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+.timer-editor-inputs {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.time-inp-pod {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 80px;
+}
+.time-inp-pod label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+.time-num-input {
+  background: #090a0d !important;
+  border: 1.5px solid var(--line) !important;
+  border-radius: 8px !important;
+  padding: 10px !important;
+  font-family: var(--font-mono) !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  text-align: center !important;
+  width: 90px !important;
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.7) !important;
+}
+.time-num-input:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px var(--accent-dim) !important;
+}
+.time-inp-sep {
+  font-size: 26px;
+  color: var(--muted2);
+  font-weight: 700;
+  margin-top: 14px;
+}
+.time-inp-actions {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+.btn-time-apply {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 20px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+  transition: transform 0.15s, filter 0.15s;
+}
+.btn-time-apply:hover { transform: translateY(-1px); filter: brightness(1.1); }
+.btn-time-sync {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 11px 16px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 12.5px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.15s;
+}
+.btn-time-sync:hover { background: rgba(255, 255, 255, 0.14); }
+
+.timer-preset-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.preset-lbl {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-right: 4px;
+}
+.btn-preset {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-preset:hover {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* Nudge & Forward/Backward Controls */
+.nudge-section-group {
+  background: rgba(0,0,0,0.28);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.nudge-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.nudge-section-title {
+  font-size: 12.5px;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.nudge-subtext {
+  font-size: 11px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+.nudge-btns-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 8px;
+}
+.btn-nudge {
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid var(--line);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.15s;
+}
+.btn-nudge-back {
+  background: rgba(59, 130, 246, 0.1);
+  color: #93c5fd;
+  border-color: rgba(59, 130, 246, 0.25);
+}
+.btn-nudge-back:hover {
+  background: rgba(59, 130, 246, 0.22);
+  border-color: #60a5fa;
+  color: #fff;
+  transform: translateY(-1px);
+}
+.btn-nudge-fwd {
+  background: rgba(249, 115, 22, 0.1);
+  color: #fdba74;
+  border-color: rgba(249, 115, 22, 0.25);
+}
+.btn-nudge-fwd:hover {
+  background: rgba(249, 115, 22, 0.22);
+  border-color: #f97316;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.custom-nudge-box {
+  background: rgba(255,255,255,0.02);
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-top: 16px;
+}
+.custom-nudge-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.custom-nudge-input {
+  width: 90px !important;
+  text-align: center !important;
+  font-family: var(--font-mono) !important;
+  font-weight: 700 !important;
+}
+.custom-nudge-unit {
+  max-width: 140px;
+}
+.btn-step-action {
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12.5px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s;
+}
+.btn-step-back {
+  background: rgba(59, 130, 246, 0.15);
+  color: #93c5fd;
+  border-color: rgba(59, 130, 246, 0.3);
+}
+.btn-step-back:hover {
+  background: #2563eb;
+  color: #fff;
+  transform: translateY(-1px);
+}
+.btn-step-fwd {
+  background: rgba(249, 115, 22, 0.15);
+  color: #fdba74;
+  border-color: rgba(249, 115, 22, 0.3);
+}
+.btn-step-fwd:hover {
+  background: #ea580c;
+  color: #fff;
+  transform: translateY(-1px);
+}
+.time-indicator-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--line);
+  padding: 4px 10px;
+  border-radius: 6px;
+  color: var(--muted);
+}
+.time-indicator-badge strong {
+  color: var(--accent);
+}
+
 /* =====================================================================
    ADMIN LOGIN GATE
    ===================================================================== */
@@ -546,6 +830,25 @@ input[type="file"]{display:none;}
   .logo-col{flex-direction:row;align-items:center;} .logo-preview{width:60px;height:60px;flex-shrink:0;}
   .grid2{grid-template-columns:1fr;} .modebar{padding:12px 16px;}
   .tabs .tab{padding:8px 10px;font-size:11px;} .wrap{padding:22px 14px 100px;}
+
+  /* Mobile Timer Responsiveness */
+  .timer-digital-box { gap: 4px; margin: 16px 0; }
+  .t-digit-pod { min-width: 62px; padding: 10px 6px; border-radius: 8px; }
+  .t-digit-val { font-size: 24px; letter-spacing: 1px; }
+  .t-digit-lbl { font-size: 7.5px; letter-spacing: 0.5px; margin-top: 4px; }
+  .t-digit-sep { font-size: 18px; }
+  .timer-editor-inputs { gap: 6px; }
+  .time-inp-pod { min-width: 60px; flex: 1; }
+  .time-num-input { width: 100% !important; font-size: 18px !important; padding: 8px 4px !important; }
+  .time-inp-sep { font-size: 20px; margin-top: 10px; }
+  .time-inp-actions { width: 100%; margin-top: 10px; display: flex; gap: 8px; }
+  .btn-time-apply, .btn-time-sync { flex: 1; justify-content: center; font-size: 12px; padding: 10px 12px; }
+  .nudge-btns-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .btn-nudge { font-size: 11px; padding: 8px 4px; gap: 4px; }
+  .custom-nudge-controls { flex-direction: column; align-items: stretch; gap: 10px; }
+  .custom-nudge-controls > div { max-width: 100% !important; width: 100%; }
+  .btn-step-action { flex: 1; justify-content: center; }
+  .btn-timer-action { width: 100%; justify-content: center; }
 }
 </style>
 </head>
@@ -779,6 +1082,56 @@ input[type="file"]{display:none;}
         </div>
       </div>
 
+      <!-- Direct Countdown Number Editor -->
+      <div class="timer-editor-box" id="timerEditorBox">
+        <div class="timer-editor-header">
+          <span class="timer-editor-title">
+            <i class="fa-solid fa-pen-to-square" style="color:var(--accent);"></i>
+            Edit Countdown Numbers (Direct Time Set)
+          </span>
+          <span class="timer-editor-hint">
+            Type exact Hours, Minutes, Seconds to set mission clock directly
+          </span>
+        </div>
+        <div class="timer-editor-inputs">
+          <div class="time-inp-pod">
+            <label for="inpEditH">Hours</label>
+            <input type="number" id="inpEditH" min="0" max="999" value="24" class="time-num-input" placeholder="HH">
+          </div>
+          <span class="time-inp-sep">:</span>
+          <div class="time-inp-pod">
+            <label for="inpEditM">Minutes</label>
+            <input type="number" id="inpEditM" min="0" max="59" value="00" class="time-num-input" placeholder="MM">
+          </div>
+          <span class="time-inp-sep">:</span>
+          <div class="time-inp-pod">
+            <label for="inpEditS">Seconds</label>
+            <input type="number" id="inpEditS" min="0" max="59" value="00" class="time-num-input" placeholder="SS">
+          </div>
+          <div class="time-inp-actions">
+            <button type="button" class="btn-time-apply" onclick="adminApplyCustomTime()">
+              <i class="fa-solid fa-check"></i> Set Countdown Time
+            </button>
+            <button type="button" class="btn-time-sync" onclick="adminSyncInputFromCurrent()" title="Copy current clock time into inputs for quick fine-tuning">
+              <i class="fa-solid fa-arrows-rotate"></i> Load Live Time
+            </button>
+          </div>
+        </div>
+        <div class="timer-preset-row">
+          <span class="preset-lbl">Quick Presets:</span>
+          <button type="button" class="btn-preset" onclick="adminSetPreset(24, 0, 0)">24h</button>
+          <button type="button" class="btn-preset" onclick="adminSetPreset(18, 0, 0)">18h</button>
+          <button type="button" class="btn-preset" onclick="adminSetPreset(12, 0, 0)">12h</button>
+          <button type="button" class="btn-preset" onclick="adminSetPreset(8, 0, 0)">8h</button>
+          <button type="button" class="btn-preset" onclick="adminSetPreset(4, 0, 0)">4h</button>
+          <button type="button" class="btn-preset" onclick="adminSetPreset(2, 0, 0)">2h</button>
+          <button type="button" class="btn-preset" onclick="adminSetPreset(1, 0, 0)">1h</button>
+          <button type="button" class="btn-preset" onclick="adminSetPreset(0, 30, 0)">30m</button>
+          <button type="button" class="btn-preset" onclick="adminSetPreset(0, 15, 0)">15m</button>
+          <button type="button" class="btn-preset" onclick="adminSetPreset(0, 5, 0)">5m</button>
+        </div>
+      </div>
+
       <!-- Main Action Controls -->
       <div class="timer-ctrl-btns">
         <button class="btn-timer-action btn-timer-start" onclick="adminTimerStart()">
@@ -796,6 +1149,111 @@ input[type="file"]{display:none;}
         <button class="btn-timer-action btn-timer-reset" onclick="adminTimerReset()">
           &#8634; RESET TO 24H
         </button>
+      </div>
+    </div>
+
+    <!-- Forward & Backward Time Controls Card -->
+    <div class="card" style="border-left: 3px solid var(--accent); margin-bottom: 24px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+        <div>
+          <h3 style="margin:0 0 4px;display:flex;align-items:center;gap:8px;">
+            <i class="fa-solid fa-forward-step" style="color:var(--accent);"></i>
+            Forward &amp; Backward Time Controls
+          </h3>
+          <p style="margin:0;font-size:12.5px;color:var(--muted);">
+            Instantly adjust, fast-forward, or rewind the countdown during live hackathon proceedings.
+          </p>
+        </div>
+        <div class="time-indicator-badge" id="admTimeIndicator">
+          Current Countdown: <strong id="admIndRemaining">24h 00m 00s</strong>
+        </div>
+      </div>
+
+      <!-- Step Backward (Rewind Clock / Add Remaining Time) -->
+      <div class="nudge-section-group">
+        <div class="nudge-header-row">
+          <span class="nudge-section-title">
+            <i class="fa-solid fa-backward" style="color:#60a5fa;"></i>
+            <strong>Rewind Clock / Add Time (Move Backward &#8678;)</strong>
+          </span>
+          <span class="nudge-subtext">Rolls back elapsed time &bull; Adds more time to countdown</span>
+        </div>
+        <div class="nudge-btns-grid">
+          <button type="button" class="btn-nudge btn-nudge-back" onclick="adminStepBackward(3600)">
+            <i class="fa-solid fa-backward-step"></i> -1 Hour
+          </button>
+          <button type="button" class="btn-nudge btn-nudge-back" onclick="adminStepBackward(1800)">
+            <i class="fa-solid fa-backward-step"></i> -30 Min
+          </button>
+          <button type="button" class="btn-nudge btn-nudge-back" onclick="adminStepBackward(900)">
+            <i class="fa-solid fa-backward-step"></i> -15 Min
+          </button>
+          <button type="button" class="btn-nudge btn-nudge-back" onclick="adminStepBackward(300)">
+            <i class="fa-solid fa-backward-step"></i> -5 Min
+          </button>
+          <button type="button" class="btn-nudge btn-nudge-back" onclick="adminStepBackward(60)">
+            <i class="fa-solid fa-backward-step"></i> -1 Min
+          </button>
+          <button type="button" class="btn-nudge btn-nudge-back" onclick="adminStepBackward(10)">
+            <i class="fa-solid fa-backward-step"></i> -10 Sec
+          </button>
+        </div>
+      </div>
+
+      <!-- Step Forward (Advance Clock / Fast-Forward / Skip Time) -->
+      <div class="nudge-section-group" style="margin-top:16px;">
+        <div class="nudge-header-row">
+          <span class="nudge-section-title">
+            <i class="fa-solid fa-forward" style="color:#f97316;"></i>
+            <strong>Advance Clock / Fast-Forward (Move Forward &#8680;)</strong>
+          </span>
+          <span class="nudge-subtext">Advances elapsed time &bull; Skips countdown ahead</span>
+        </div>
+        <div class="nudge-btns-grid">
+          <button type="button" class="btn-nudge btn-nudge-fwd" onclick="adminStepForward(10)">
+            +10 Sec <i class="fa-solid fa-forward-step"></i>
+          </button>
+          <button type="button" class="btn-nudge btn-nudge-fwd" onclick="adminStepForward(60)">
+            +1 Min <i class="fa-solid fa-forward-step"></i>
+          </button>
+          <button type="button" class="btn-nudge btn-nudge-fwd" onclick="adminStepForward(300)">
+            +5 Min <i class="fa-solid fa-forward-step"></i>
+          </button>
+          <button type="button" class="btn-nudge btn-nudge-fwd" onclick="adminStepForward(900)">
+            +15 Min <i class="fa-solid fa-forward-step"></i>
+          </button>
+          <button type="button" class="btn-nudge btn-nudge-fwd" onclick="adminStepForward(1800)">
+            +30 Min <i class="fa-solid fa-forward-step"></i>
+          </button>
+          <button type="button" class="btn-nudge btn-nudge-fwd" onclick="adminStepForward(3600)">
+            +1 Hour <i class="fa-solid fa-forward-step"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Custom Stepper Box -->
+      <div class="custom-nudge-box">
+        <div style="font-size:12px;font-weight:700;color:var(--ink);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">
+          Custom Step / Nudge Amount:
+        </div>
+        <div class="custom-nudge-controls">
+          <div style="display:flex;align-items:center;gap:8px;flex:1;max-width:320px;">
+            <input type="number" id="admCustomNudgeVal" min="1" max="999" value="5" class="custom-nudge-input" placeholder="Amount">
+            <select id="admCustomNudgeUnit" class="custom-nudge-unit">
+              <option value="60" selected>Minutes</option>
+              <option value="3600">Hours</option>
+              <option value="1">Seconds</option>
+            </select>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button type="button" class="btn-step-action btn-step-back" onclick="adminCustomStep('backward')">
+              <i class="fa-solid fa-backward"></i> Step Backward
+            </button>
+            <button type="button" class="btn-step-action btn-step-fwd" onclick="adminCustomStep('forward')">
+              Step Forward <i class="fa-solid fa-forward"></i>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1667,6 +2125,89 @@ function renderAdminTimerView(){
   }
   if (progBar) {
     progBar.style.width = Math.min(100, t.progressPct) + '%';
+  }
+  var indRem = document.getElementById('admIndRemaining');
+  if (indRem) {
+    indRem.textContent = t.hours + 'h ' + t.minutes + 'm ' + t.seconds + 's';
+  }
+}
+
+function adminApplyCustomTime(){
+  var inpH = document.getElementById('inpEditH');
+  var inpM = document.getElementById('inpEditM');
+  var inpS = document.getElementById('inpEditS');
+  var h = inpH ? parseInt(inpH.value, 10) : 0;
+  var m = inpM ? parseInt(inpM.value, 10) : 0;
+  var s = inpS ? parseInt(inpS.value, 10) : 0;
+
+  if (isNaN(h) || h < 0) h = 0;
+  if (isNaN(m) || m < 0) m = 0;
+  if (m > 59) m = 59;
+  if (isNaN(s) || s < 0) s = 0;
+  if (s > 59) s = 59;
+
+  if (window.FX_Timer && typeof window.FX_Timer.setTime === 'function') {
+    window.FX_Timer.setTime(h, m, s);
+    showDeckToast();
+    renderAdminTimerView();
+  }
+}
+
+function adminSyncInputFromCurrent(){
+  if (window.FX_Timer) {
+    var t = window.FX_Timer.getTime();
+    var inpH = document.getElementById('inpEditH');
+    var inpM = document.getElementById('inpEditM');
+    var inpS = document.getElementById('inpEditS');
+    if (inpH) inpH.value = parseInt(t.hours, 10) || 0;
+    if (inpM) inpM.value = parseInt(t.minutes, 10) || 0;
+    if (inpS) inpS.value = parseInt(t.seconds, 10) || 0;
+    showDeckToast();
+  }
+}
+
+function adminSetPreset(h, m, s){
+  var inpH = document.getElementById('inpEditH');
+  var inpM = document.getElementById('inpEditM');
+  var inpS = document.getElementById('inpEditS');
+  if (inpH) inpH.value = h;
+  if (inpM) inpM.value = m;
+  if (inpS) inpS.value = s;
+
+  if (window.FX_Timer && typeof window.FX_Timer.setTime === 'function') {
+    window.FX_Timer.setTime(h, m, s);
+    showDeckToast();
+    renderAdminTimerView();
+  }
+}
+
+function adminStepForward(seconds){
+  if (window.FX_Timer && typeof window.FX_Timer.stepForward === 'function') {
+    window.FX_Timer.stepForward(seconds);
+    showDeckToast();
+    renderAdminTimerView();
+  }
+}
+
+function adminStepBackward(seconds){
+  if (window.FX_Timer && typeof window.FX_Timer.stepBackward === 'function') {
+    window.FX_Timer.stepBackward(seconds);
+    showDeckToast();
+    renderAdminTimerView();
+  }
+}
+
+function adminCustomStep(direction){
+  var valEl = document.getElementById('admCustomNudgeVal');
+  var unitEl = document.getElementById('admCustomNudgeUnit');
+  var val = valEl ? parseFloat(valEl.value) : 5;
+  var unit = unitEl ? parseFloat(unitEl.value) : 60;
+  if (isNaN(val) || val <= 0) val = 1;
+  var totalSec = val * unit;
+  if (direction === 'forward') {
+    adminStepForward(totalSec);
+  } else {
+    adminStepBackward(totalSec);
   }
 }
 
